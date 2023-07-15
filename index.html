@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="display" placeholder="0">
+        <!--Teclado/Botones-->
+        <div class="keypad">
+          <div class="row">
+            <button onclick="appendNumber(7)">7</button>
+            <button onclick="appendNumber(8)">8</button>
+            <button onclick="appendNumber(9)">9</button>
+            <button onclick="appendOperator('+')">+</button>
+          </div>
+          <div class="row">
+            <button onclick="appendNumber(4)">4</button>
+            <button onclick="appendNumber(5)">5</button>
+            <button onclick="appendNumber(6)">6</button>
+            <button onclick="appendOperator('-')">-</button>
+          </div>
+          <div class="row">
+            <button onclick="appendNumber(1)">1</button>
+            <button onclick="appendNumber(2)">2</button>
+            <button onclick="appendNumber(3)">3</button>
+            <button onclick="appendOperator('*')">*</button>
+          </div>
+          <div class="row">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendNumber(0)">0</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="appendOperator('/')">/</button>
+          </div>
+        </div>
+      </div>
+      
+
+<style>
+
+body { /*Fondo para toda la pantalla*/
+  background-image: linear-gradient(45deg, #FFC107, #FF4081, #3F51B5, #009688);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 530px; /* Ancho calculadora */
+  height: 260px; /* Altura calculadora */
+  margin: 0 auto; /* Centra la calculadora*/
+  text-align: center; 
+  padding: 10px; /*Distribución rectangular de la calculadora*/
+  background-image: linear-gradient(45deg, #009688,  #3F51B5, #FF4081, #FFC107);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.keypad {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.keypad .row {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.keypad button {
+  flex: 0 0 48%;
+  height: 50px; /* Altura de los botones */
+  margin: 1px; /*Separación entre botones*/
+  border: none;
+  border-radius: 0; /* Sin esquinas redondeadas */
+}
+  
+  #display { /* Donde aparecen los datos ingresados (input) */
+    width: 100%; /* Ancho  */
+    height: 50px; /* Altura */
+    margin-bottom: 1px;
+    width: 515px; /*Ancho en px */
+    text-align: right; 
+    padding-right: 10px;
+  }
+
+
+</style>
+
+
+<script src="script.js"></script>
+</body>
+
+
+<script>
+    let displayValue = ''; //Inicia el display vacío, y luego se llena con los datos proporcionados//
+
+    //Agrega numeros a la pantalla//
+function appendNumber(number) {
+  displayValue += number; //El valor mostrado en el display es en numero ingresado//
+  updateDisplay(); //Al llamar a esta función, actualiza los datos en el display, e igual en todas las funciones siguientes//
+}
+
+   //Agrega operadores a la pantalla//
+function appendOperator(operator) {
+  displayValue += operator;
+  updateDisplay();
+}
+
+   //Elimina todos los datos en el display//
+function clearDisplay() {
+  displayValue = ''; //Al ser vacío, "limpia" el display, borrando todos los datos//
+  updateDisplay();
+}
+
+   //Calcula las operaciones dadas//
+function calculate() {
+  try { //Try & catch se usan para poder responder a posibles errores de calculo//
+    const result = eval(displayValue); //"Eval" es una función de JS que analiza los datos de texto como una expresión matemática para después devolver el resultado//
+    //Eval evalúa los datos alacenados en "displayValue"
+    displayValue = result.toString(); //Convierte el resultado en una cadena de texto//
+    updateDisplay();
+  } catch (error) {
+    displayValue = 'Error';
+    updateDisplay();
+  }
+}
+
+   //Actualiza los datos mostrados en el display según los que se hayan ingresado o los resultados obtenidos en las operaciones//
+function updateDisplay() {
+  document.getElementById('display').value = displayValue;
+}
+
+   //Elimina el ultimo dato escrito//
+function deleteLastCharacter() {
+  displayValue = displayValue.slice(0, -1);
+  updateDisplay();
+}
+
+</script>
+
+
+</html>
+
